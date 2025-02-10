@@ -1,0 +1,39 @@
+
+.section1{
+  background-color: #1f2937;
+  color:white;
+  margin: 0;
+  padding: 0;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+  min-width: 300px;
+  flex-shrink: 0;
+}
+
+.logo{
+  font-size: 30px;
+}
+
+
+ul{
+  display: flex;
+  list-style-type: none;
+  gap:40px;
+  font-size: 26px;
+  padding: 20px;
+}
+
+a{
+  color:white;
+  text-decoration: none;
+}
+
+a:hover{
+  color:aquamarine;
+}
