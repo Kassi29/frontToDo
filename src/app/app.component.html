@@ -1,7 +1,27 @@
 <div class="container">
   <app-header></app-header>
+  <h1>My Tasks</h1>
   <div class = "main">
-    <p>HEEERE!!</p>
+
+
+    <div *ngFor = "let status of statuses" class="task-column" >
+      <h2> {{ status.name }}</h2>
+      <h2>{{ status.id }}</h2>
+      <ul>
+         <div *ngFor = "let task of tasks " class="task">
+           <div class="task-identifier">
+             <h3>{{ task.id }}</h3>
+             <span>{{ task.name }}</span>
+           </div>
+           <div class ="task-content">
+             <span id = "category">{{ task.category.name }}</span>
+             <span >{{ task.description }}</span>
+           </div>
+
+         </div>
+
+      </ul>
+    </div>
   </div>
   <app-footer></app-footer>
 </div>
