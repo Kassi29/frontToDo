@@ -1,0 +1,28 @@
+<div class="container-form">
+  <h1 class="h1-form">Create a new Category</h1>
+  <div class = "card">
+
+    <div class="form">
+      <label for="name"> Name:
+        <input class="input-text" id="name" type="text" placeholder="Category Name"/>
+      </label>
+      <label for = "color">Choose a color :
+        <div class="color">
+          <input class ="input-color" id="color" type="color" [(ngModel)]="chosenColor" />
+          <button class="button-form button-color" (click)="saveColor()">Choose color</button>
+        </div>
+      </label>
+      <hr>
+    </div>
+    <div class="buttons-form">
+      <button class = " button-form ">Cancel</button>
+      <button class=" button-form ">Create</button>
+
+    </div>
+
+  </div>
+
+
+
+
+</div>
