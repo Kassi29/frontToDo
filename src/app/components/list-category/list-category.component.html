@@ -1,0 +1,32 @@
+
+  <div class="container">
+    <h1 class="h1-form">My categories</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let category of categories">
+        <td>{{ category.name }}</td>
+
+        <td>
+          <div class="color-table" [style.background-color]="category.color"></div>
+        </td>
+        <td>
+          <div class="buttons-actions">
+            <button class="btn-edit" >Edit</button>
+            <button class="btn-delete">Delete </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+

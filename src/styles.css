@@ -105,3 +105,9 @@ hr{
   border-top: 3px solid #2d3748;
   margin: 5px;
 }
+.container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+}
