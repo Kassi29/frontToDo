@@ -73,7 +73,9 @@ input::placeholder {
 
 .buttons-form{
   display: flex;
+  justify-content: center;
   gap:50px;
+  padding: 10px;
 }
 
 .button-form:hover {
@@ -89,11 +91,13 @@ input::placeholder {
 
 }
 .input-color{
-  width: 100px;
+  width: 50%;
   height: 45px;
-  border-radius: 10%;
+  border-radius: 10px;
   border: none;
   border:snow;
+  padding: 0;
+  margin: 10px 0;
 }
 .button-color{
   font-size: 25px;
@@ -103,7 +107,7 @@ input::placeholder {
 hr{
   border: none;
   border-top: 3px solid #2d3748;
-  margin: 5px;
+  margin: 10px;
 }
 .container{
   display: flex;
@@ -121,4 +125,15 @@ hr{
   padding: 12px;
   border-radius: 10px;
   text-align: center;
+}
+
+.validation-message{
+  background-color: #2d3748;
+  margin: 0 auto;
+  width: 60%;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+
+
 }

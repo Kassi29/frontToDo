@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {Category} from '../../models/category.model';
 import {catchError, Observable, throwError} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,33 @@ export class CategoryService {
   constructor(private http: HttpClient) {
   }
 
+  createCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(this.url , category)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getCategories(): Observable <Category []>{
     return this.http.get<Category[]>(this.url);
   }
 
-  deleteCategory(id: number): Observable<void> {
+    deleteCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`).pipe(
-      catchError(() => throwError(() => new Error('This category can\'t be deleted because it has tasks. Please delete the tasks first.')))
+      catchError(this.handleError)
     );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof Array) {
+      errorMessage = error.error[0];
+    }else if (error.error instanceof ErrorEvent){
+      errorMessage = `Backend returned code ${error.status}, body was: ${error.error}`;
+    }else if (error.error && error.error.message) {
+      errorMessage = error.error.message;
+    }
+    return throwError(() => new Error(errorMessage) );
   }
 
 
