@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+
 import {Category} from '../../models/category.model';
-import {Observable} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class CategoryService {
   }
 
   deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`);
+    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+      catchError(() => throwError(() => new Error('This category can\'t be deleted because it has tasks. Please delete the tasks first.')))
+    );
   }
+
+
+
 }

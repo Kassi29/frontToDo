@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {Category} from '../../models/category.model';
 import {CategoryService} from '../../services/category/category.service';
 
 @Component({
   selector: 'app-list-category',
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './list-category.component.html',
   standalone: true,
@@ -14,6 +15,7 @@ import {CategoryService} from '../../services/category/category.service';
 })
 export class ListCategoryComponent implements OnInit {
   categories : Category[] = [];
+  errorMessage: string = '';
 
   constructor(private categoryService: CategoryService) {
 
@@ -24,9 +26,16 @@ export class ListCategoryComponent implements OnInit {
   }
 
   private loadCategories() {
-    this.categoryService.getCategories().subscribe( categories =>
-    this.categories = categories
-    );
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+        this.errorMessage = '';
+      },
+      error: (error) => {
+        console.log('Error loading categories:', error);
+        this.errorMessage = 'Failed to load categories. Please try again later.';
+      }
+    });
   }
 
   deleteCategory(id: number) {
@@ -36,7 +45,7 @@ export class ListCategoryComponent implements OnInit {
 
       },
       error: (error) => {
-        console.log('Failed to delete category' + error);
+        this.errorMessage = error;
       }
     })
   }
