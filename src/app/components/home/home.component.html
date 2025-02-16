@@ -1,23 +1,23 @@
-<h1 class="h1-form">My Tasks</h1>
-<div class = "main">
+<div class="container">
+  <h1 class="h1-form">My Tasks</h1>
+  <div class = "main">
+    <div *ngFor = "let status of statuses" class="task-column" >
+      <h2> {{ status.name }}</h2>
 
+      <ul>
+        <h2>{{ status.id }}</h2>
 
-  <div *ngFor = "let status of statuses" class="task-column" >
-    <h2> {{ status.name }}</h2>
-    <h2>{{ status.id }}</h2>
-    <ul>
-      <div *ngFor = "let task of tasks " class="task">
-        <div class="task-identifier">
-          <h3>{{ task.id }}</h3>
-          <span>{{ task.name }}</span>
+        <div *ngFor="let task of tasksByStatus[status.id]" class="task">
+          <div class="task-identifier">
+            <h3>{{ task.id }}</h3>
+            <span>{{ task.name }}</span>
+          </div>
+          <div class="task-content">
+            <span id="category">{{ task.categoryName }}</span>
+            <span>{{ task.description }}</span>
+          </div>
         </div>
-        <div class ="task-content">
-          <span id = "category">{{ task.category.name }}</span>
-          <span >{{ task.description }}</span>
-        </div>
-
-      </div>
-
-    </ul>
+      </ul>
+    </div>
   </div>
 </div>

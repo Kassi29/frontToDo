@@ -1,59 +1,49 @@
-import { Component } from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {NgForOf, NgIf} from '@angular/common';
+import {Status} from '../../models/status.model';
+import {TaskService} from '../../services/task/task.service';
+import {TaskDTOModel} from '../../models/taskDTO.model';
+
 
 @Component({
   selector: 'app-home',
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './home.component.html',
   standalone: true,
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  statuses = [
-    {id: 1, name: 'To Do'},
+  statuses: Status[] =[];
+  tasksByStatus: { [key: number]: TaskDTOModel[] } = {};
 
-    {id: 2, name: 'In Progress'},
-    {id: 3, name: 'Done'},
-  ]
-
-  category1 = {
-    id: 1,
-    name:'university'
-  }
-  category2 = {
-    id: 2,
-    name:'job'
+  constructor(private taskService: TaskService) {
   }
 
-  category3 = {
-    id: 3,
-    name:'gym'
+  ngOnInit() {
+    this.loadStatuses();
   }
 
-  title = 'ToDoFront';
+  loadStatuses(): void {
+    this.taskService.getStatuses().subscribe(statuses => {
+      this.statuses = statuses;
 
-  tasks = [
-    { id: 1, name: 'Task 1', description: 'Omg this is a description',
-      category: this.category3
-    },
-    { id:2,  name: 'Task 2', description: 'Omg this is a description',
-      category: this.category2
-    },
-    { id: 3,name: 'Task 3', description: 'Omg this is a description',
-      category: this.category1
-    },
-    { id: 4,name: 'Task 4', description: 'Omg this is a description',
-      category: this.category3
-    },
-    { id:5, name: 'Task 5', description: 'Omg this is a description',
-      category: this.category1
-    },
-    { id:6, name: 'Task 6', description: 'Omg this is a description',
-      category: this.category2
-    }
-  ]
+        this.statuses.forEach(status => {
+        this.loadTasksByStatus(status.id);
+      });
+    });
+  }
+
+  loadTasksByStatus(statusId: number): void {
+    this.taskService.getTasksByStatus(statusId).subscribe(tasks => {
+      this.tasksByStatus[statusId] = tasks;
+    });
+  }
+
+
+
 
 }
