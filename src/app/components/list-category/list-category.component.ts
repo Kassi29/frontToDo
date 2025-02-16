@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
+import {Category} from '../../models/category.model';
+import {CategoryService} from '../../services/category/category.service';
 
 @Component({
   selector: 'app-list-category',
@@ -10,23 +12,33 @@ import {NgForOf} from '@angular/common';
   standalone: true,
   styleUrl: './list-category.component.css'
 })
-export class ListCategoryComponent {
-  categories = [
-    {
-      id: 1,
-      name:'university',
-      color: '#FFB6C1'
-    } ,{
-      id: 2,
-      name:'job',
-      color: '#AEC6CF'
-    },{
-      id: 3,
-      name:'gym',
-      color: '#FDFD96'
-    }
+export class ListCategoryComponent implements OnInit {
+  categories : Category[] = [];
 
+  constructor(private categoryService: CategoryService) {
 
-  ]
+  }
+
+  ngOnInit() {
+    this.loadCategories();
+  }
+
+  private loadCategories() {
+    this.categoryService.getCategories().subscribe( categories =>
+    this.categories = categories
+    );
+  }
+
+  deleteCategory(id: number) {
+    this.categoryService.deleteCategory(id).subscribe({
+      next: () => {
+        this.loadCategories();
+
+      },
+      error: (error) => {
+        console.log('Failed to delete category' + error);
+      }
+    })
+  }
 
 }

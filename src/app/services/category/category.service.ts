@@ -1,9 +1,23 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Category} from '../../models/category.model';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  constructor() { }
+  private url = 'http://localhost:8080/categories';
+
+  constructor(private http: HttpClient) {
+  }
+
+  getCategories(): Observable <Category []>{
+    return this.http.get<Category[]>(this.url);
+  }
+
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+  }
 }
