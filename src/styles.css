@@ -107,7 +107,18 @@ hr{
 }
 .container{
   display: flex;
+  gap: 10px;
   flex-direction: column;
   min-height: 100vh;
   background-color: #f0f4f8;
+}
+
+.error-message{
+  background-color: #f23d3d;
+  margin: 0 auto;
+  width: 60%;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
 }
