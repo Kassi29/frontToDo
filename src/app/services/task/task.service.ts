@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Status} from '../../models/status.model';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable} from 'rxjs';
 import {TaskDTOModel} from '../../models/taskDTO.model';
 import {Task} from '../../models/task.model';
 import {ErrorHandlerService} from '../error-handler.service';
@@ -12,7 +12,7 @@ import {ErrorHandlerService} from '../error-handler.service';
 export class TaskService {
 
   private statusUrl = 'http://localhost:8080/status';
-  private taskUrl = 'http://localhost:8080/tasks/filter/';
+  private taskUrl = 'http://localhost:8080/tasks';
 
   constructor(private http: HttpClient,
               private errorHandler: ErrorHandlerService
@@ -30,7 +30,7 @@ export class TaskService {
   }
 
   getTasksByStatus(id: number): Observable<TaskDTOModel[]>{
-    return this.http.get<TaskDTOModel[]>(`${this.taskUrl}${id}`);
+    return this.http.get<TaskDTOModel[]>(`${this.taskUrl}/filter/${id}`);
   }
 
 
