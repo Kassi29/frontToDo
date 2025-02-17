@@ -1,10 +1,16 @@
 <div class="container">
   <h1 class="h1-form">My Tasks</h1>
+  <div *ngIf="errorMessage" class="error-message" >
+    {{ errorMessage }}
+  </div>
   <div class = "main">
     <div *ngFor = "let status of statuses" class="task-column" >
       <h2> {{ status.name }}</h2>
 
       <ul>
+        <div *ngIf="!tasksByStatus[status.id] || tasksByStatus[status.id].length === 0">
+          <p class="validation-message">You don't have any task here yet :)</p>
+        </div>
           <div *ngFor="let task of tasksByStatus[status.id]" class="task">
 
             <div>
@@ -22,7 +28,7 @@
                 <button class="edit-btn">
                   <span class="material-icons">edit</span>
                 </button>
-                <button class="delete-btn">
+                <button (click)="deleteTask( task.id )" class="delete-btn">
                   <span class="material-icons">delete</span>
                 </button>
               </div>

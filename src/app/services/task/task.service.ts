@@ -33,5 +33,11 @@ export class TaskService {
     return this.http.get<TaskDTOModel[]>(`${this.taskUrl}/filter/${id}`);
   }
 
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.taskUrl}/${id}`).pipe(
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
 
 }

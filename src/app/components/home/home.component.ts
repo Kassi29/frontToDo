@@ -8,7 +8,8 @@ import {TaskDTOModel} from '../../models/taskDTO.model';
 @Component({
   selector: 'app-home',
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './home.component.html',
   standalone: true,
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   statuses: Status[] =[];
   tasksByStatus: { [key: number]: TaskDTOModel[] } = {};
+  errorMessage: string = '';
 
   constructor(private taskService: TaskService) {
   }
@@ -40,6 +42,19 @@ export class HomeComponent implements OnInit {
     this.taskService.getTasksByStatus(statusId).subscribe(tasks => {
       this.tasksByStatus[statusId] = tasks;
     });
+  }
+
+  deleteTask(id: number) : void {
+    this.taskService.deleteTask(id).subscribe({
+
+      next: () => {
+        this.loadStatuses();
+      },
+      error: (error): void => {
+        this.errorMessage = error;
+      }
+      }
+    )
   }
 
 
