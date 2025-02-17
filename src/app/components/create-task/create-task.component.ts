@@ -57,7 +57,7 @@ export class CreateTaskComponent implements OnInit  {
   ngOnInit() {
     this.taskId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     if(this.taskId){
-      this.title = 'Update Category';
+      this.title = 'Update Task';
       this.loadTask(this.taskId);
     }
 
