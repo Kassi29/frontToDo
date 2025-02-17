@@ -8,8 +8,7 @@ import {TaskDTOModel} from '../../models/taskDTO.model';
 @Component({
   selector: 'app-home',
   imports: [
-    NgForOf,
-    NgIf
+    NgForOf
   ],
   templateUrl: './home.component.html',
   standalone: true,

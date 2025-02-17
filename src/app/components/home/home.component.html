@@ -5,19 +5,33 @@
       <h2> {{ status.name }}</h2>
 
       <ul>
-        <h2>{{ status.id }}</h2>
+          <div *ngFor="let task of tasksByStatus[status.id]" class="task">
 
-        <div *ngFor="let task of tasksByStatus[status.id]" class="task">
-          <div class="task-identifier">
-            <h3>{{ task.id }}</h3>
-            <span>{{ task.name }}</span>
-          </div>
-          <div class="task-content">
-            <span id="category">{{ task.categoryName }}</span>
-            <span>{{ task.description }}</span>
-          </div>
-        </div>
-      </ul>
+            <div>
+              <div class="task-identifier">
+                <h3>{{ task.id }}</h3>
+                <span>{{ task.name }}</span>
+              </div>
+              <div class="task-content">
+                <span class="category"  [style.color]="task.categoryColor" >{{ task.categoryName }}</span>
+                <span>{{ task.description }}</span>
+                </div>
+              </div>
+
+              <div class="buttons-task">
+                <button class="edit-btn">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="delete-btn">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+
+            </div>
+
+
+
+        </ul>
+      </div>
     </div>
   </div>
-</div>

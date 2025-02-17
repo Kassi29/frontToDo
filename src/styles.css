@@ -98,6 +98,7 @@ input::placeholder {
   border:snow;
   padding: 0;
   margin: 10px 0;
+  cursor: pointer;
 }
 .button-color{
   font-size: 25px;

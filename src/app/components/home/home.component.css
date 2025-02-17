@@ -30,6 +30,8 @@ h2{
 }
 
 .task{
+  display: flex;
+  justify-content: space-around;
   border: 3px solid #1f2937;
   padding: 15px;
   border-radius: 15px;
@@ -46,6 +48,7 @@ h2{
   padding: 10px;
   font-weight: bold;
   font-size: 25px;
+
 }
 
 .task-content{
@@ -54,15 +57,47 @@ h2{
   gap: 10px;
 }
 
-#category{
-  font-size: 20px;
-  color: pink;
-  font-weight: bold;
-}
-
 h1{
   padding: 20px;
   color:#1f2937;
   font-size: 50px;
   text-align: center;
+}
+
+
+
+.buttons-task{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+
+button{
+  border-radius: 10px;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+button > span{
+  color: white;
+}
+
+.edit-btn{
+  background-color: #1f2937;
+}
+
+.delete-btn{
+  background-color: #f7a1a1;
+}
+
+.category{
+  font-size: 20px;
+  font-weight: bolder;
+  border: 5px solid ;
+  border-radius: 10px;
+  padding: 5px;
+
 }
