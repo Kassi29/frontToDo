@@ -25,7 +25,7 @@
             <button class="edit-btn" [routerLink]="['/update-category', category.id]" >
               <span class="material-icons">edit</span>
             </button>
-            <button class="delete-btn" (click)="deleteCategory( category.id )">
+            <button class="delete-btn" type="button" (click)="deleteCategory( category.id )">
               <span class="material-icons">delete</span>
             </button>
           </div>
