@@ -2,12 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {Category} from '../../models/category.model';
 import {CategoryService} from '../../services/category/category.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-list-category',
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './list-category.component.html',
   standalone: true,

@@ -8,6 +8,7 @@ export const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'create-task', component: CreateTaskComponent},
   {path: 'create-category', component: CreateCategoryComponent},
-  {path: 'list-categories', component: ListCategoryComponent}
+  {path: 'list-categories', component: ListCategoryComponent},
+  {path: 'update-category/:id', component: CreateCategoryComponent},
 
 ];

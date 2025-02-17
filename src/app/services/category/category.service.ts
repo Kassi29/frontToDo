@@ -25,7 +25,24 @@ export class CategoryService {
   }
 
   getCategories(): Observable <Category []>{
-    return this.http.get<Category[]>(this.url);
+    return this.http.get<Category[]>(this.url)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );;
+  }
+
+  getCategoryById(id:number): Observable<Category> {
+    return this.http.get<Category>(`${this.url}/${id}`).pipe(
+      catchError(this.errorHandler.handleError)
+    );
+
+  }
+
+  updateCategory(id:number, category: Category): Observable<void> {
+    return this.http.put<void>(`${this.url}/${id}`, category)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
   }
 
     deleteCategory(id: number): Observable<void> {

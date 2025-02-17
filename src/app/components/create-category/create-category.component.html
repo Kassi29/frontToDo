@@ -1,5 +1,5 @@
 <div class="container-form">
-  <h1 class="h1-form">Create a new Category</h1>
+  <h1 class="h1-form">{{ title }}</h1>
   <div class = "card">
 
     <form  [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
@@ -24,8 +24,8 @@
       <hr>
 
     <div class="buttons-form">
-      <button class = " button-form ">Cancel</button>
-      <button class="button-form" type="submit" [disabled]="categoryForm.invalid" >Create</button>
+      <button class="button-form" [routerLink]="'/list-categories'">Cancel</button>
+      <button class="button-form" type="submit" [disabled]="categoryForm.invalid" >Save</button>
     </div>
   </form>
 

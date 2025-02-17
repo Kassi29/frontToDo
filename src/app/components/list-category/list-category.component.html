@@ -22,7 +22,7 @@
         </td>
         <td>
           <div class="buttons-actions">
-            <button class="btn-edit" >Edit</button>
+            <button class="btn-edit" [routerLink]="['/update-category', category.id]" >Edit</button>
             <button class="btn-delete" (click)="deleteCategory( category.id )">Delete </button>
           </div>
         </td>
