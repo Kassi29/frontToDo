@@ -136,6 +136,23 @@ hr{
   border-radius: 10px;
   text-align: center;
   color: white;
+}
 
 
+.edit-btn {
+  background-color: #1f2937;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #050b13;
+}
+
+.delete-btn {
+  background-color: #f7a1a1;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #f56565;
 }
