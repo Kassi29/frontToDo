@@ -1,5 +1,5 @@
 <div class="container-form">
-  <h1 class="h1-form">Create a new Task</h1>
+  <h1 class="h1-form">{{ title }}</h1>
   <div class = "card">
 
     <form class="form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
@@ -19,13 +19,13 @@
         <input formControlName="description" class="input-text" id="description" type="text" placeholder="Description" >
       </label>
       <div class="validation-message" *ngIf="taskForm.get('description')?.hasError('required') && taskForm.get('name')?.touched">
-        Name is required.
+        Description is required.
       </div>
       <div class="validation-message" *ngIf="taskForm.get('description')?.hasError('minlength') && taskForm.get('name')?.touched">
-        Name must be at least 3 characters long.
+        Description must be at least 3 characters long.
       </div>
       <div class="validation-message" *ngIf="taskForm.get('description')?.hasError('maxlength') && taskForm.get('name')?.touched">
-        Name cannot be longer than 20 characters.
+        Description cannot be longer than 20 characters.
       </div>
       <label for = "category">Choose a category :
         <select id="category" formControlName="category">
@@ -36,8 +36,8 @@
       </label>
 
       <div class="buttons-form">
-        <button class = "button-form ">Cancel</button>
-        <button class="button-form" type="submit" [disabled]="taskForm.invalid">Create</button>
+        <button class = "button-form" type="button" [routerLink] = "'/'">Cancel</button>
+        <button class="button-form" type="submit" [disabled]="taskForm.invalid">Save</button>
       </div>
     </form>
     <div *ngIf="errorMessage" class="error-message">

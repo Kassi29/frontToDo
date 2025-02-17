@@ -25,7 +25,7 @@
               </div>
 
               <div class="buttons-task">
-                <button class="edit-btn">
+                <button class="edit-btn" [routerLink]="['/update-task',task.id]">
                   <span class="material-icons">edit</span>
                 </button>
                 <button (click)="deleteTask( task.id )" class="delete-btn">

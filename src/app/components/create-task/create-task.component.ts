@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
 import {TaskService} from '../../services/task/task.service';
 import {Task} from '../../models/task.model';
 import {CategoryService} from '../../services/category/category.service';
 import {Category} from '../../models/category.model';
+
 
 @Component({
   selector: 'app-create-task',
@@ -15,7 +16,8 @@ import {Category} from '../../models/category.model';
     FormsModule,
     ReactiveFormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   styleUrl: './create-task.component.css'
 })
@@ -24,10 +26,15 @@ export class CreateTaskComponent implements OnInit  {
   errorMessage: string = '';
   categories: Category[] = [];
 
+  taskId: number = 0;
+  title: string = 'Create a new task';
+
+
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private taskService: TaskService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,
+              private activatedRoute: ActivatedRoute,) {
 
     this.taskForm = this.formBuilder.group({
       name: ['', [
@@ -40,7 +47,7 @@ export class CreateTaskComponent implements OnInit  {
         Validators.maxLength(20),
         Validators.minLength(3)
       ]],
-      category: [null,[
+      category: [this.categories.length > 0 ? this.categories[0] :null,[
         Validators.required,
       ]]
 
@@ -48,7 +55,29 @@ export class CreateTaskComponent implements OnInit  {
   }
 
   ngOnInit() {
+    this.taskId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    if(this.taskId){
+      this.title = 'Update Category';
+      this.loadTask(this.taskId);
+    }
+
     this.loadCategories();
+  }
+
+  loadTask(id: number): void{
+
+    this.taskService.getTaskById(id).subscribe({
+      next: (task) => {
+
+        this.taskForm.patchValue({
+          name: task.name,
+          description: task.description,
+          category: task.category,
+        });
+      },error: (error) => {
+        this.errorMessage = error;
+    }
+    })
   }
 
   private loadCategories() {
@@ -73,22 +102,41 @@ export class CreateTaskComponent implements OnInit  {
 
 
     const taskData: Task = this.taskForm.value;
+
     const selectedCategory = this.categories.find(c =>
                                                                            c === taskData.category)
     if(selectedCategory){
       taskData.category = selectedCategory;
     }
 
+    if(this.taskId ){
 
-    this.taskService.createTask(taskData).subscribe( {
-      next: () => {
-        this.taskForm.reset();
-        this.router.navigate(['/']);
-      },
-      error: (error) => {
-        this.errorMessage = error;
-      }
-    })
+
+       this.taskService.updateTask(this.taskId, taskData).subscribe({
+        next: () =>{
+          this.taskForm.reset();
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          this.errorMessage = error;
+        }
+      })
+
+    }else{
+      this.taskService.createTask(taskData).subscribe( {
+        next: () => {
+          this.taskForm.reset();
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          this.errorMessage = error;
+        }
+      })
+
+    }
+
+
+
   }
 
 }

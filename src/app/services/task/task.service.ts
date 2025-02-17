@@ -26,11 +26,27 @@ export class TaskService {
   }
 
   getStatuses(): Observable<Status[]> {
-    return this.http.get<Status[]>(this.statusUrl);
+    return this.http.get<Status[]>(this.statusUrl).pipe(
+      catchError(this.errorHandler.handleError)
+    );
   }
 
   getTasksByStatus(id: number): Observable<TaskDTOModel[]>{
-    return this.http.get<TaskDTOModel[]>(`${this.taskUrl}/filter/${id}`);
+    return this.http.get<TaskDTOModel[]>(`${this.taskUrl}/filter/${id}`).pipe(
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  getTaskById(id: number): Observable<Task>{
+    return this.http.get<Task>(`${this.taskUrl}/${id}`).pipe(
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  updateTask(id: number, task: Task){
+    return this.http.put<Task>(`${this.taskUrl}/${id}`, task).pipe(
+      catchError(this.errorHandler.handleError)
+    );
   }
 
   deleteTask(id: number): Observable<void> {

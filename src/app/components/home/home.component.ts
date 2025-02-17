@@ -3,13 +3,15 @@ import {NgForOf, NgIf} from '@angular/common';
 import {Status} from '../../models/status.model';
 import {TaskService} from '../../services/task/task.service';
 import {TaskDTOModel} from '../../models/taskDTO.model';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
   selector: 'app-home',
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   standalone: true,
@@ -29,19 +31,32 @@ export class HomeComponent implements OnInit {
   }
 
   loadStatuses(): void {
-    this.taskService.getStatuses().subscribe(statuses => {
-      this.statuses = statuses;
+    this.taskService.getStatuses().subscribe({
+      next: statuses => {
+        this.statuses = statuses;
 
         this.statuses.forEach(status => {
-        this.loadTasksByStatus(status.id);
-      });
-    });
+          this.loadTasksByStatus(status.id)
+
+        });
+      },
+      error: (error): void => {
+        this.errorMessage = error;
+      }
+    })
   }
 
   loadTasksByStatus(statusId: number): void {
-    this.taskService.getTasksByStatus(statusId).subscribe(tasks => {
-      this.tasksByStatus[statusId] = tasks;
-    });
+    this.taskService.getTasksByStatus(statusId).subscribe({
+      next: (tasks) => {
+        this.tasksByStatus[statusId] = tasks;
+      },
+      error: (error): void => {
+      this.errorMessage = error;
+    }
+    }
+    )
+
   }
 
   deleteTask(id: number) : void {
