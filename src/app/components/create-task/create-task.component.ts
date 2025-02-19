@@ -47,7 +47,7 @@ export class CreateTaskComponent implements OnInit  {
         Validators.maxLength(20),
         Validators.minLength(3)
       ]],
-      category: [this.categories.length > 0 ? this.categories[0] :null,[
+      category: ['',[
         Validators.required,
       ]]
 
@@ -55,12 +55,11 @@ export class CreateTaskComponent implements OnInit  {
   }
 
   ngOnInit() {
+
     this.taskId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     if(this.taskId){
       this.title = 'Update Task';
-      this.loadTask(this.taskId);
     }
-
     this.loadCategories();
   }
 
@@ -68,11 +67,12 @@ export class CreateTaskComponent implements OnInit  {
 
     this.taskService.getTaskById(id).subscribe({
       next: (task) => {
-
+        const selectedCategory = this.categories.find( category =>
+                                                                              category.name === task.category.name)
         this.taskForm.patchValue({
           name: task.name,
           description: task.description,
-          category: task.category,
+          category: selectedCategory
         });
       },error: (error) => {
         this.errorMessage = error;
@@ -83,11 +83,15 @@ export class CreateTaskComponent implements OnInit  {
   private loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
+
         this.categories = categories;
         this.errorMessage = '';
+        if(this.taskId){
+          this.loadTask(this.taskId);
+
+        }
       },
       error: (error) => {
-        console.log('Error loading categories:', error);
         this.errorMessage = 'Failed to load categories. Please try again later.';
       }
     });
