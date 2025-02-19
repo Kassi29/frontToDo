@@ -3,15 +3,25 @@
   <div *ngIf="errorMessage" class="error-message" >
     {{ errorMessage }}
   </div>
-  <div class = "main">
-    <div *ngFor = "let status of statuses" class="task-column" >
+  <div class = "main" cdkDropListGroup>
+    <div *ngFor = "let status of statuses" class="task-column"
+         cdkDropList
+         (cdkDropListDropped)="drop($event)"
+         [cdkDropListData]="tasksByStatus"
+         [id]="String(status.id)"
+
+    >
       <h2> {{ status.name }}</h2>
 
       <ul>
         <div *ngIf="!tasksByStatus[status.id] || tasksByStatus[status.id].length === 0">
           <p class="validation-message">You don't have any task here yet :)</p>
         </div>
-          <div *ngFor="let task of tasksByStatus[status.id]" class="task">
+          <div *ngFor="let task of tasksByStatus[status.id]" class="task"
+               cdkDrag
+               cdkDragPreviewContainer="global"
+
+          >
 
             <div>
               <div class="task-identifier">

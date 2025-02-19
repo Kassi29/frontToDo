@@ -4,6 +4,7 @@ import {Status} from '../../models/status.model';
 import {TaskService} from '../../services/task/task.service';
 import {TaskDTOModel} from '../../models/taskDTO.model';
 import {RouterLink} from '@angular/router';
+import {CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -11,7 +12,10 @@ import {RouterLink} from '@angular/router';
   imports: [
     NgForOf,
     NgIf,
-    RouterLink
+    RouterLink,
+    CdkDrag,
+    CdkDropList,
+    CdkDropListGroup
   ],
   templateUrl: './home.component.html',
   standalone: true,
@@ -73,6 +77,17 @@ export class HomeComponent implements OnInit {
   }
 
 
+  drop(event: CdkDragDrop<{ [key: number]: TaskDTOModel[] }, any>) {
+    const { previousIndex, currentIndex, container, previousContainer } = event;
 
+    const currentColumnId = Number(container.id);
+    const previousColumnId =Number(previousContainer.id);
+    const previousColumnData = previousContainer.data[previousColumnId] ;
+    const currentColumnData = container.data[currentColumnId] ;
 
+    transferArrayItem(previousColumnData, currentColumnData, previousIndex, currentIndex);
+
+  }
+
+  protected readonly String = String;
 }
