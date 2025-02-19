@@ -7,6 +7,7 @@ import {RouterLink} from '@angular/router';
 import {CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -77,7 +78,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  drop(event: CdkDragDrop<{ [key: number]: TaskDTOModel[] }, any>) {
+  drop(event: CdkDragDrop<{ [p: number]: TaskDTOModel[] }, any>) {
     const { previousIndex, currentIndex, container, previousContainer } = event;
 
     const currentColumnId = Number(container.id);
@@ -85,7 +86,37 @@ export class HomeComponent implements OnInit {
     const previousColumnData = previousContainer.data[previousColumnId] ;
     const currentColumnData = container.data[currentColumnId] ;
 
+
+    const idTask = previousColumnData[previousIndex].id;
+
+    this.findStatus(idTask, currentColumnId);
     transferArrayItem(previousColumnData, currentColumnData, previousIndex, currentIndex);
+
+
+
+  }
+
+  findStatus(idTask:number, idStatus: number): void{
+    this.taskService.getStatusById(idStatus).subscribe({
+      next:(status )  =>{
+        this.changeStatus(idTask, status)
+      } ,
+      error: (error): void => {
+        this.errorMessage = error;
+      }
+    })
+
+  }
+
+  changeStatus(id: number, status: Status): void {
+    this.taskService.changeStatus(id,status).subscribe({
+      next: () => {
+        this.loadStatuses();
+      },
+      error: (error): void => {
+        this.errorMessage = error;
+      }
+    })
 
   }
 

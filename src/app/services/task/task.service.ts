@@ -55,5 +55,17 @@ export class TaskService {
     );
   }
 
+  changeStatus(id:number, status:Status){
+    return this.http.put<void>(`${this.taskUrl}/${id}/status`,status).pipe(
+      catchError(this.errorHandler.handleError)
+    )
+  }
+
+  getStatusById(id: number): Observable<Status> {
+    return this.http.get<Status>(`${this.statusUrl}/${id}`).pipe(
+      catchError(this.errorHandler.handleError)
+    )
+  }
+
 
 }
